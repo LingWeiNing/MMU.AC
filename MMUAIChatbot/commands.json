@@ -1,0 +1,39 @@
+{
+  "greetings": {
+      "hello": "Hi there! How can I assist you today?",
+      "hi": "Hello! What can I help you with?",
+      "hey": "Hey! What would you like to know?",
+      "who are you": "Hello! I am an AI Chatbot named Alex, I can help by answering your questions.",
+      "你好": "你好，有什么我可以帮您的吗？",
+      "你是谁": "你好！我是一个名为 Alex 的人工智能聊天机器人，我可以帮助回答您的问题。",
+      "hai": "Hai! Bagaimana saya boleh membantu hari ini?",
+      "siapa awak": "Hello! Saya adalah AI Chatbot bernama Alex."
+  },
+  "farewells": {
+      "bye": "Goodbye! Have a great day!",
+      "see you": "See you later!",
+      "take care": "Take care!"
+  },
+  "information": {
+      "weather": "Please tell me the city for the weather update.",
+      "time": "The current time is: {time}.",
+      "date": "Today's date is: {date}.",
+      "天气": "请告诉我天气更新的城市。",
+      "时间": "现在的时间是: {time}.",
+      "日期": "现在的日期是: {date}.",
+      "cuaca": "Sila beritahu saya bandar untuk kemas kini cuaca.",
+      "masa": "Sekarang waktu: {time}.",
+      "tarikh": "Tarikh hari ni ialah {date}."
+  },
+  "assistance": {
+      "help": "Sure! What do you need help with?",
+      "assist": "I'm here to assist you. Just ask!",
+      "support": "What support can I provide?"
+  },
+  "others": {
+      "joke": "Why don't scientists trust atoms? Because they make up everything!",
+      "quote": "The only way to do great work is to love what you do."
+  }
+}
+
+  

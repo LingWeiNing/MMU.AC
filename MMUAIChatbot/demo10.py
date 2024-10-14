@@ -34,8 +34,8 @@ context_history = []
 embeddings_model = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
 
 # Load and process documents
-csv_file_path = "C:/Users/yap63/Desktop/Chatbot/en-FAQ.csv"
-pdf_file_path = "C:/Users/yap63/Desktop/Chatbot/Academic_Handbook.pdf"
+csv_file_path = "en-FAQ.csv"
+pdf_file_path = "Academic_Handbook.pdf"
 
 if not os.path.exists(csv_file_path):
     raise FileNotFoundError(f"CSV file not found: {csv_file_path}")
@@ -276,18 +276,20 @@ def process_command_gui(command):
         if lang == 'zh-cn':
             print("Processing Chinese command...")
             if "你好" in command:
-                app.after(0, lambda: respond_gui("你好，有什么我可以帮您的吗？", lang='zh-cn'))
+                response = command_mappings["greetings"]["你好"]
+                app.after(0, lambda: respond_gui(response, lang='zh-cn'))
                 return
             elif "你是谁" in command:
-                app.after(0, lambda: respond_gui("你好！我是一个名为 Alex 的人工智能聊天机器人，我可以帮助回答您的问题。", lang='zh-cn'))
+                response = command_mappings["greetings"]["你是谁"]
+                app.after(0, lambda: respond_gui(response, lang='zh-cn'))
                 return
             elif "时间" in command:
-                current_time = get_current_time()
-                app.after(0, lambda: respond_gui(f"现在的时间是 {current_time}.", lang='zh-cn'))
+                response = command_mappings["information"]["时间"].format(time=datetime.now().strftime("%H:%M:%S"))
+                app.after(0, lambda: respond_gui(response, lang='zh-cn'))
                 return
             elif "日期" in command:
-                current_date = get_current_date()
-                app.after(0, lambda: respond_gui(f"现在的日期是 {current_date}.", lang='zh-cn'))
+                response = command_mappings["information"]["日期"].format(date=datetime.now().strftime('%Y-%m-%d'))
+                app.after(0, lambda: respond_gui(response, lang='zh-cn'))
                 return
             elif "天气" in command:
                 weather_info = get_weather(city="Cyberjaya", lang="zh-cn")
@@ -299,18 +301,20 @@ def process_command_gui(command):
             lang = 'ms'  # Normalize Malay
             print("Processing Malay command...")
             if "hai" in command_words:
-                app.after(0, lambda: respond_gui("Hai! Bagaimana saya boleh membantu hari ini?", lang='ms'))
+                response = command_mappings["greetings"]["hai"]
+                app.after(0, lambda: respond_gui(response, lang='ms'))
                 return
             elif "siapa awak" in command_lower:
-                app.after(0, lambda: respond_gui("Hello! Saya adalah AI Chatbot bernama Alex.", lang='ms'))
+                response = command_mappings["greetings"]["siapa awak"]
+                app.after(0, lambda: respond_gui(response, lang='ms'))
                 return
             elif "waktu" in command_lower:
-                current_time = get_current_time()
-                app.after(0, lambda: respond_gui(f"Waktu sekarang ialah {current_time}.", lang='ms'))
+                response = command_mappings["information"]["masa"].format(time=datetime.now().strftime("%H:%M:%S"))
+                app.after(0, lambda: respond_gui(response, lang='ms'))
                 return
             elif "tarikh" in command_lower:
-                current_date = get_current_date()
-                app.after(0, lambda: respond_gui(f"Tarikh hari ini ialah {current_date}.", lang='ms'))
+                response = command_mappings["information"]["tarikh"].format(date=datetime.now().strftime('%Y-%m-%d'))
+                app.after(0, lambda: respond_gui(response, lang='ms'))
                 return
             elif "cuaca" in command_lower:
                 weather_info = get_weather(city="Cyberjaya", lang="ms")
@@ -320,15 +324,17 @@ def process_command_gui(command):
         # Handle English commands
         else:
             if any(greetings in command_words for greetings in ["hello", "hi", "hey", "good morning", "good afternoon", "good evening"]):
-                app.after(0, lambda: respond_gui("Hello! How can I help you today?"))
+                response = command_mappings["greetings"]["hello"]
+                app.after(0, lambda: respond_gui(response, lang='en'))
             elif any(who in command_lower for who in ["who are you", "what are you", "can you tell me who you are"]):
-                app.after(0, lambda: respond_gui("Hello! I am an AI Chatbot named Alex, I can help by answering your questions."))
+                response = command_mappings["greetings"]["who are you"]
+                app.after(0, lambda: respond_gui(response, lang='en'))
             elif "time" in command_words:
-                current_time = get_current_time()
-                app.after(0, lambda: respond_gui(f"The current time is {current_time}."))
+                response = command_mappings["information"]["time"].format(time=datetime.now().strftime("%H:%M:%S"))
+                app.after(0, lambda: respond_gui(response, lang='en'))
             elif "date" in command_words:
-                current_date = get_current_date()
-                app.after(0, lambda: respond_gui(f"The current date is {current_date}."))
+                response = command_mappings["information"]["date"].format(date=datetime.now().strftime('%Y-%m-%d'))
+                app.after(0, lambda: respond_gui(response, lang='en'))
             elif "weather" in command_lower:
                 weather_info = get_weather(city="Cyberjaya", lang="en")
                 app.after(0, lambda: respond_gui(weather_info))
@@ -391,14 +397,6 @@ def _listen_in_background():
         print("Sorry, I could not understand the audio.")
     except sr.RequestException as e:
         print(f"Could not request results from Google Speech Recognition service; {e}")
-
-def get_current_time():
-    now = datetime.now()
-    return now.strftime("%H:%M:%S")
-
-def get_current_date():
-    now = datetime.now()
-    return now.strftime("%Y-%m-%d")
 
 # Feedback Collection
 feedback_file_path = "Feedback.csv"
